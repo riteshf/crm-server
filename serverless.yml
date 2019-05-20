@@ -1,0 +1,47 @@
+
+service: sls # NOTE: update this with your service name
+
+custom:
+  settings:
+    POSTS_TABLE: posts
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  environment: ${self:custom.settings}
+  region: us-east-2
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: 
+        - dynamodb:DescribeTable
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: 
+        - "aws:aws:dynamodb:${self:provider.region}:*:table/${self:custom.settings.POSTS_TABLE}"
+
+functions:
+  createPosts:
+    handler: handler.createPosts
+    events:
+    - http:
+        path: /post
+        method: post
+
+resources:
+  Resources: 
+    PostsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+        KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.settings.POSTS_TABLE}

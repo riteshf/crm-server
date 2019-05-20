@@ -1,0 +1,28 @@
+{
+  "name": "crm-server",
+  "version": "1.0.0",
+  "description": "A serverless api backend for crm-ui",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riteshf/crm-server.git"
+  },
+  "keywords": [
+    "serverless",
+    "lambda",
+    "aws",
+    "nodejs"
+  ],
+  "author": "riteshf",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riteshf/crm-server/issues"
+  },
+  "homepage": "https://github.com/riteshf/crm-server#readme",
+  "dependencies": {
+    "uuid": "^3.3.2"
+  }
+}
